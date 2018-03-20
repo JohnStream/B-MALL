@@ -7,7 +7,5 @@ namespace B_MALL.Common
         ERROR = 1,
         NEED_LOGIN = 10,
         ILLEGAL_ARGUMENT = 2
-        
-
     }
 }

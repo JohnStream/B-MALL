@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using B_MALL.Common;
 
 namespace B_MALL.Common
 {
@@ -48,6 +49,42 @@ namespace B_MALL.Common
         public String getMsg()
         {
             return msg;
+        }
+        public static ServerResponse<T> createBySuccess()
+        {
+            return new ServerResponse<T>((int)ResponseCode.SUCCESS);
+        }
+
+        public static  ServerResponse<T> createBySuccessMessage(String msg)
+        {
+            return new ServerResponse<T>((int)ResponseCode.SUCCESS, msg);
+        }
+
+        public static ServerResponse<T> createBySuccess(T data)
+        {
+            return new ServerResponse<T>((int)ResponseCode.SUCCESS, data);
+        }
+
+        public static  ServerResponse<T> createBySuccess(String msg, T data)
+        {
+            return new ServerResponse<T>((int)ResponseCode.SUCCESS, msg, data);
+        }
+
+
+        public static ServerResponse<T> createByError()
+        {
+            return new ServerResponse<T>((int)ResponseCode.ERROR);
+        }
+
+
+        public static ServerResponse<T> createByErrorMessage(String errorMessage)
+        {
+            return new ServerResponse<T>((int)ResponseCode.ERROR, errorMessage);
+        }
+
+        public static  ServerResponse<T> createByErrorCodeMessage(int errorCode, String errorMessage)
+        {
+            return new ServerResponse<T>(errorCode, errorMessage);
         }
     }
 }

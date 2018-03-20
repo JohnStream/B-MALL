@@ -1,11 +1,10 @@
 using System;
 using B_MALL.Common;
 using B_MALL.Core.Models;
-namespace B_MALL.Service
+namespace B_MALL.Services
 {
-    public interface IUserService
+    public interface IAccountService
     {
-        //登录接口
         ServerResponse<User> login(String username, String password);
     }
 }

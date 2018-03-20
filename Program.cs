@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using B_MALL.EntityFramework;
+using B_MALL.Services;
 namespace B_MALL
 {
     public class Program
@@ -26,6 +27,7 @@ namespace B_MALL
                     var context = services.GetRequiredService<UserContext>();
                     //初始化种子数据
                     DbInitializer.Initialize(context);
+                    
                 }
                 catch (Exception ex)
                 {
