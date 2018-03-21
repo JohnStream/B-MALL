@@ -15,6 +15,7 @@ namespace B_MALL.Services
         }
         public ServerResponse<User> login(String username, String password)
         {
+
             int resultCount = _userservice.checkUsername(username);
             if (resultCount == 0)
             {

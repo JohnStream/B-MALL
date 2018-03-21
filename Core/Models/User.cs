@@ -4,7 +4,6 @@ using System.ComponentModel;
 namespace B_MALL.Core.Models
 {
     // user信息表
-    [Serializable]
     public class User
     {
         public int Id { get; set; }

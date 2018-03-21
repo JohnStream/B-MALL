@@ -6,7 +6,6 @@ using B_MALL.Common;
 
 namespace B_MALL.Common
 {
-    [Serializable]
     public class ServerResponse<T>
     {
         private int status;
