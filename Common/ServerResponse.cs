@@ -8,26 +8,27 @@ namespace B_MALL.Common
 {
     public class ServerResponse<T>
     {
-        private int status;
-        private String msg;
-        private T data;
-        private ServerResponse(int status)
+        public int status;
+        public String msg;
+        public T data;
+        
+        public ServerResponse(int status)
         {
             this.status = status;
         }
-        private ServerResponse(int status, T data)
+        public ServerResponse(int status, T data)
         {
             this.status = status;
             this.data = data;
         }
-        private ServerResponse(int status, String msg, T data)
+        public ServerResponse(int status, String msg, T data)
         {
             this.status = status;
             this.msg = msg;
             this.data = data;
         }
 
-        private ServerResponse(int status, String msg)
+        public ServerResponse(int status, String msg)
         {
             this.status = status;
             this.msg = msg;
@@ -68,6 +69,10 @@ namespace B_MALL.Common
         {
             return new ServerResponse<T>((int)ResponseCode.SUCCESS, msg, data);
         }
+        public static ServerResponse<T> createByErrorMessage(String errorMessage)
+        {
+            return new ServerResponse<T>((int)ResponseCode.ERROR, errorMessage);
+        }
 
 
         public static ServerResponse<T> createByError()
@@ -76,10 +81,7 @@ namespace B_MALL.Common
         }
 
 
-        public static ServerResponse<T> createByErrorMessage(String errorMessage)
-        {
-            return new ServerResponse<T>((int)ResponseCode.ERROR, errorMessage);
-        }
+        
 
         public static  ServerResponse<T> createByErrorCodeMessage(int errorCode, String errorMessage)
         {
