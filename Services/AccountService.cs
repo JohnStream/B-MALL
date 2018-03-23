@@ -6,6 +6,7 @@ using System.Linq;
 using B_MALL.Util;
 using B_MALL.Dtos;
 using AutoMapper;
+using B_MALL.Common;
 namespace B_MALL.Services
 {
     public class AccountService : IAccountService
@@ -38,6 +39,45 @@ namespace B_MALL.Services
                 return ServerResponse<UserDto>.createByErrorMessage("密码错误");
             }
             return ServerResponse<UserDto>.createBySuccess("登录成功", userdto);
+
+        }
+        // 效验用户名
+        public ServerResponse<String> checkValid(string str, string type)
+        {
+            if (ConstType.USERNAME.Equals(type))
+            {
+                int count = _userservice.checkUsername(str);
+                if (count > 0)
+                {
+                    return ServerResponse<String>.createByErrorMessage("该用户名已经注册");
+                }
+            }
+            else if (ConstType.EMAIL.Equals(type))
+            {
+                int count = _userservice.checkEmail(str);
+                if (count > 0)
+                {
+                    return ServerResponse<String>.createByErrorMessage("该邮箱已经注册");
+                }
+
+            }
+            else
+            {
+                return ServerResponse<String>.createByErrorMessage("参数错误");
+            }
+            return ServerResponse<String>.createBySuccessMessage("校验成功");
+
+        }
+        // 注册
+        ServerResponse<String> register(User user){
+           ServerResponse<String> validResponse = this.checkValid(user.UserName,ConstType.USERNAME);
+           if(!validResponse.isSuccess()){
+               return validResponse;
+           }
+           validResponse = this.checkValid(user.Email,ConstType.EMAIL);
+            if(!validResponse.isSuccess()){
+               return validResponse;
+           }
         }
     }
 }

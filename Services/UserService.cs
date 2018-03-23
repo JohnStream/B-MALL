@@ -4,6 +4,7 @@ using B_MALL.Core.Models;
 using B_MALL.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using B_MALL.Common;
 
 namespace B_MALL.Services
 {
@@ -20,11 +21,28 @@ namespace B_MALL.Services
             var count = _context.Users.Where(i => i.UserName == name).Count();
             return count;
         }
+        // 检查邮箱是否存在
+
+        public int checkEmail(string email)
+        {
+            var count = _context.Users.Where(i => i.Email == email).Count();
+            return count;
+
+        }
         // 检查账号密码是否正确
         public User selectLogin(string name, string password)
         {
             User user = (from c in _context.Users where c.UserName == name && c.PassWord == password select c).SingleOrDefault();
             return user;
         }
+        // 插入记录
+        public int insert(User user)
+        {
+            _context.Users.Add(user);
+            var count = _context.SaveChanges();
+            return count;
+        }
+
+
     }
 }

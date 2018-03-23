@@ -23,12 +23,14 @@ namespace B_MALL.Controllers
             _accountService = accountService;
         }
         [HttpPost]
-        public ServerResponse<UserDto> login([FromBody]UserDto user)
+        public ServerResponse<UserDto> login([FromBody]User user)
         {
+            // 登录
             // TODO 非空检查
             ServerResponse<UserDto> response = _accountService.login(user.UserName, user.PassWord);
             return response;
             
         }
+        // 注册
     }
 }

@@ -7,7 +7,10 @@ namespace B_MALL.Services
 {
     public interface IUserService
     {
-         int  checkUsername(string username);
-         User selectLogin(string username,string password);
+        int checkEmail(string email);
+        int checkUsername(string username);
+        User selectLogin(string username, string password);
+        int insert(User user);
+
     }
 }
