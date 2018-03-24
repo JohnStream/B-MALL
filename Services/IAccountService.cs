@@ -8,7 +8,7 @@ namespace B_MALL.Services
     {
         ServerResponse<UserDto> login(String username, String password);
         ServerResponse<String> checkValid(String str,String type);
-        ServerResponse<String> register(String str,String type);
+        ServerResponse<String> register(User user);
         
     }
 }

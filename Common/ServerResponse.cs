@@ -1,4 +1,6 @@
-// 全局的统一服务器响应对象，通过泛型达到超级高复用
+
+// 全局的统一服务器响应对象
+
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

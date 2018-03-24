@@ -25,14 +25,15 @@ namespace B_MALL
                 {
                     //从依赖关系注入容器中获取的数据库上下文实例。
                     var context = services.GetRequiredService<UserContext>();
-                    //初始化种子数据
+                    // 创建数据库
+                    // context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                     
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
+                    logger.LogError(ex, "数据库生成错误");
                 }
             }
 

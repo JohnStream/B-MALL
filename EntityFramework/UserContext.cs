@@ -11,7 +11,7 @@ namespace B_MALL.EntityFramework
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<User>().ToTable("User").HasKey(c => new {c.Id});
         }
 
     }

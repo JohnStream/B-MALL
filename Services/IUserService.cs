@@ -11,6 +11,5 @@ namespace B_MALL.Services
         int checkUsername(string username);
         User selectLogin(string username, string password);
         int insert(User user);
-
     }
 }

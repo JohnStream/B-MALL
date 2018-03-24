@@ -6,7 +6,6 @@ using System.Linq;
 using B_MALL.Util;
 using B_MALL.Dtos;
 using AutoMapper;
-using B_MALL.Common;
 namespace B_MALL.Services
 {
     public class AccountService : IAccountService
@@ -69,15 +68,28 @@ namespace B_MALL.Services
 
         }
         // 注册
-        ServerResponse<String> register(User user){
-           ServerResponse<String> validResponse = this.checkValid(user.UserName,ConstType.USERNAME);
-           if(!validResponse.isSuccess()){
-               return validResponse;
-           }
-           validResponse = this.checkValid(user.Email,ConstType.EMAIL);
-            if(!validResponse.isSuccess()){
-               return validResponse;
-           }
+        public ServerResponse<String> register (User user)
+        {
+            ServerResponse<String> validResponse = this.checkValid(user.UserName, ConstType.USERNAME);
+            if (!validResponse.isSuccess())
+            {
+                return validResponse;
+            }
+            validResponse = this.checkValid(user.Email, ConstType.EMAIL);
+            if (!validResponse.isSuccess())
+            {
+                return validResponse;
+            }
+            // TODO 管理员 用户
+            user.PassWord = MD5Util.GetMD5(user.PassWord);
+            user.Create_Time = DateTime.Now;
+            int resultCount = _userservice.insert(user);
+            if (resultCount == 0)
+            {
+                return ServerResponse<String>.createByErrorMessage("注册失败");
+            }
+            return ServerResponse<String>.createBySuccessMessage("注册成功");
+
         }
     }
 }

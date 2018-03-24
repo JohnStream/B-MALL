@@ -4,7 +4,6 @@ using B_MALL.Core.Models;
 using B_MALL.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using B_MALL.Common;
 
 namespace B_MALL.Services
 {

@@ -33,6 +33,8 @@ namespace B_MALL
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
+            // Session服务
+            // services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,7 @@ namespace B_MALL
             {
                 app.UseDeveloperExceptionPage();
             }
+            // app.UseSession();
             app.UseMvc();
         }
     }
