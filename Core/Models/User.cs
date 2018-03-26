@@ -1,12 +1,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace B_MALL.Core.Models
 {
     // user信息表
     public class User
     {
         [Key,Required]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         public string UserName { get; set; }

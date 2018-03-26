@@ -10,6 +10,8 @@ namespace B_MALL.Dtos
         public string email;
         [Phone]
         public string phone;
+        // 显示到天
+        [DataType(DataType.Date)]
         public DateTime createTime;
 
     }

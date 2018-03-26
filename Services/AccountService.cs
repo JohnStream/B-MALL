@@ -29,8 +29,8 @@ namespace B_MALL.Services
             {
                 return ServerResponse<UserDto>.createByErrorMessage("用户名不存在");
             }
-            // String md5Password = MD5Util.GetMD5(password);
-            User user = _userservice.selectLogin(username, password);
+            String md5Password = MD5Util.GetMD5(password);
+            User user = _userservice.selectLogin(username, md5Password);
             var userdto = AutoMapper.Mapper.Map<UserDto>(user);
 
             if (user == null)

@@ -1,3 +1,5 @@
+// md5加密
+
 using System.Security.Cryptography;
 using System.Text;
 namespace B_MALL.Util

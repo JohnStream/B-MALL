@@ -11,6 +11,7 @@ using B_MALL.Dtos;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using B_MALL.Util;
+using Microsoft.AspNetCore.Http;
 
 namespace B_MALL.Controllers
 {
@@ -28,7 +29,11 @@ namespace B_MALL.Controllers
             // 登录
             // TODO 非空检查
             ServerResponse<UserDto> response = _accountService.login(user.UserName, user.PassWord);
-            // HttpContext.Session.Set("CurrentUser", ByteConvertHelper.Object2Bytes(user));
+            if (response.isSuccess())
+            {
+                HttpContext.Session.Set("CurrentUser", ByteConvertHelper.Object2Bytes(response.getData()));
+            }
+
             return response;
 
         }
@@ -42,15 +47,16 @@ namespace B_MALL.Controllers
             return response;
         }
         // 获取用户登录状态
-        // public ServerResponse<UserDto> getUserInfo()
-        // {
-        //     UserDto user = (UserDto)HttpContext.Session.getAttribute("CurrentUser");
-        //     if (user != null)
-        //     {
-        //         return ServerResponse<UserDto>.createBySuccess(user);
-        //     }
-        //     return ServerResponse<UserDto>.createByErrorMessage("用户未登录,无法获取当前用户的信息");
-        // }
+        [HttpGet,Route("/user/getUserInfo")]
+        public ServerResponse<UserDto> getUserInfo()
+        {
+            UserDto user = (UserDto)ByteConvertHelper.Bytes2Object(HttpContext.Session.Get("CurrentUser"));
+            if (user != null)
+            {
+                return ServerResponse<UserDto>.createBySuccess(user);
+            }
+            return ServerResponse<UserDto>.createByErrorCodeMessage(10,"用户未登录,无法获取当前用户的信息");
+        }
 
         // TODO 忘记密码
         // TODO 重置密码

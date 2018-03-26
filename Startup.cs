@@ -12,6 +12,8 @@ using B_MALL.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using B_MALL.Services;
 using AutoMapper;
+using Swashbuckle.AspNetCore;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace B_MALL
 {
@@ -27,14 +29,26 @@ namespace B_MALL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUserService,UserService>();
-            services.AddTransient<IAccountService,AccountService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddDbContext<UserContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "My API",
+                    Description = "MALL Web API",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "MALL" }
+                });
+            });
             // Session服务
-            // services.AddSession();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,8 +58,14 @@ namespace B_MALL
             {
                 app.UseDeveloperExceptionPage();
             }
-            // app.UseSession();
+            // Session服务
+            app.UseSession();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }
