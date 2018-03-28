@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using B_MALL.Common;
+using Newtonsoft.Json;
 
 namespace B_MALL.Common
 {
@@ -12,6 +13,8 @@ namespace B_MALL.Common
     {
         public int status;
         public String msg;
+
+        [JsonProperty(NullValueHandling=NullValueHandling.Ignore)]
         public T data;
         
         public ServerResponse(int status)

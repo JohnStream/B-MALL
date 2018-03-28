@@ -29,12 +29,18 @@ namespace B_MALL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IAccountService, AccountService>();
+            // 依赖注入
+            // Transient： 每一次GetService都会创建一个新的实例
+            // Scoped：  在同一个Scope内只初始化一个实例 ，可以理解为（ 每一个request级别只创建一个实例，同一个http request会在一个 scope内）
+            // Singleton ：整个应用程序生命周期以内只创建一个实例
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+            // 默认数据库连接
             services.AddDbContext<UserContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddAutoMapper(typeof(Startup));
+            // Swagger webapi文档工具
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

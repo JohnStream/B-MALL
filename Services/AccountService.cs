@@ -11,11 +11,13 @@ namespace B_MALL.Services
     public class AccountService : IAccountService
     {
         private IUserService _userservice;
+        private IMapper _mapper;
         // private readonly IMapper _mapper;
 
-        public AccountService(IUserService userservice)
+        public AccountService(IUserService userservice,IMapper mapper)
         {
             _userservice = userservice;
+            _mapper = mapper;
         }
         // public AccountService(IMapper mapper)
         // {
@@ -31,7 +33,7 @@ namespace B_MALL.Services
             }
             String md5Password = MD5Util.GetMD5(password);
             User user = _userservice.selectLogin(username, md5Password);
-            var userdto = AutoMapper.Mapper.Map<UserDto>(user);
+            var userdto = _mapper.Map<UserDto>(user);
 
             if (user == null)
             {

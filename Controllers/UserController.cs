@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using B_MALL.Util;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace B_MALL.Controllers
 {
@@ -26,6 +27,10 @@ namespace B_MALL.Controllers
         [HttpPost, Route("/user/login")]
         public ServerResponse<UserDto> login([FromBody]User user)
         {
+            if (user == null)
+            {
+                return ServerResponse<UserDto>.createByErrorCodeMessage(100, "请重新登录");
+            }
             // 登录
             // TODO 非空检查
             ServerResponse<UserDto> response = _accountService.login(user.UserName, user.PassWord);
@@ -43,24 +48,44 @@ namespace B_MALL.Controllers
         {
             // 登录
             // TODO 非空检查
+            if (user == null)
+            {
+                return ServerResponse<String>.createByErrorCodeMessage(100, "请重新注册");
+            }
             ServerResponse<String> response = _accountService.register(user);
             return response;
         }
         // 获取用户登录状态
-        [HttpGet,Route("/user/getUserInfo")]
+        [HttpGet, Route("/user/getUserInfo")]
         public ServerResponse<UserDto> getUserInfo()
         {
-            UserDto user = (UserDto)ByteConvertHelper.Bytes2Object(HttpContext.Session.Get("CurrentUser"));
+            byte[] session = HttpContext.Session.Get("CurrentUser");
+            if (session == null)
+            {
+                return ServerResponse<UserDto>.createByErrorCodeMessage(10, "用户未登录,无法获取当前用户的信息");
+            }
+            UserDto user = (UserDto)ByteConvertHelper.Bytes2Object<UserDto>(session);
             if (user != null)
             {
                 return ServerResponse<UserDto>.createBySuccess(user);
             }
-            return ServerResponse<UserDto>.createByErrorCodeMessage(10,"用户未登录,无法获取当前用户的信息");
+            return ServerResponse<UserDto>.createByErrorCodeMessage(10, "用户未登录,无法获取当前用户的信息");
         }
-
+        // TODO 检查用户名
         // TODO 忘记密码
         // TODO 重置密码
         // TODO 获取用户信息
+        // TODO 获取用户密码提示问题
+        // 更新个人信息
+        // 登录状态下更新密码
+        
+        // 登出
+        [HttpPost, Route("/user/logout")]
+        public ServerResponse<String> logout()
+        {
+            HttpContext.Session.Remove("CurrentUser");
+            return ServerResponse<string>.createBySuccessMessage("退出成功");
+        }
 
     }
 }
